@@ -248,7 +248,7 @@ class SortableLink
     private static function buildQueryString($queryParameters, $sortParameter, $direction)
     {
         $checkStrlenOrArray = function ($element) {
-            return is_array($element) ? $element : strlen($element);
+            return is_array($element) ? $element : mb_strlen($element ?? '');
         };
 
         $persistParameters = array_filter(request()->except('sort', 'direction', 'page'), $checkStrlenOrArray);
@@ -268,7 +268,7 @@ class SortableLink
         }
 
         unset($anchorAttributes['href']);
-        
+
         $attributes = [];
         foreach ($anchorAttributes as $k => $v) {
             $attributes[] = $k.('' != $v ? '="'.$v.'"' : '');
